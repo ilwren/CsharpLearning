@@ -8,7 +8,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/build/publish"
 
-"$ROOT/scripts/build-runner.sh"
+bash "$ROOT/scripts/build-runner.sh"
 
 echo "==> 发布站点"
 rm -rf "$OUT"
