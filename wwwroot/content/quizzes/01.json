@@ -1,0 +1,40 @@
+{
+  "chapter": "01",
+  "questions": [
+    {
+      "id": "01-1",
+      "type": "single",
+      "prompt": "`Console.WriteLine(\"Hello\");` 的作用是？",
+      "options": [
+        "在屏幕上输出 Hello 并换行",
+        "把 Hello 保存到文件",
+        "定义一个变量",
+        "注释掉这一行"
+      ],
+      "answer": 0,
+      "explain": "WriteLine 输出文本并换行；Write 则不换行。"
+    },
+    {
+      "id": "01-2",
+      "type": "single",
+      "prompt": "运行 `Console.ReadLine()` 时，用户只按了回车（没有输入任何字符），返回值是？",
+      "options": [
+        "\"\"（空字符串）",
+        "null",
+        "0",
+        "程序会抛出异常"
+      ],
+      "answer": 0,
+      "explain": "只按回车得到的是空字符串。只有输入流结束（例如按 Ctrl+Z / Ctrl+D）时才返回 null。"
+    },
+    {
+      "id": "01-3",
+      "type": "code",
+      "prompt": "写一个程序，依次输出两行，分别是 `Hello, C#!` 和 `Sum: 7`。第二行的 7 请用 3 + 4 计算得到。",
+      "starter": "// 在这里写代码\n",
+      "expected": "Hello, C#!\nSum: 7",
+      "hint": "用两次 Console.WriteLine。",
+      "explain": "插值字符串 $\"...{表达式}...\" 会先计算花括号里的表达式。"
+    }
+  ]
+}

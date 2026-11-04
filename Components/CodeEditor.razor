@@ -1,0 +1,63 @@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div class="lt-editor">
+    <div class="lt-editor-bar">
+        <button type="button" class="lt-codebar-btn" @ref="_copyBtn" @onclick="CopyAsync">复制代码</button>
+    </div>
+    <div id="@_id" class="lt-editor-host" style="height:@Height"></div>
+</div>
+
+@code {
+    /// <summary>初始内容（只在首次渲染时生效；之后用 SetValueAsync 修改）。</summary>
+    [Parameter] public string Value { get; set; } = "";
+
+    [Parameter] public string Height { get; set; } = "320px";
+
+    private readonly string _id = "ed" + Guid.NewGuid().ToString("N");
+    private string _initial = "";
+    private bool _created;
+    private ElementReference _copyBtn;
+
+    /// <summary>把编辑器里的当前代码复制到剪贴板（用户看到的内容，包括未运行的修改）。</summary>
+    private async Task CopyAsync()
+    {
+        if (!_created) return;
+        await JS.InvokeVoidAsync("lt.copyEditor", _id, _copyBtn);
+    }
+
+    protected override void OnInitialized() => _initial = Value;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        // 补全由 Monaco 的补全提供器直接调用 ltRunner.complete（见 wwwroot/js/site.js），这里不需要回调
+        await JS.InvokeVoidAsync("lt.createEditor", _id, _initial);
+        _created = true;
+    }
+
+    public ValueTask<string> GetValueAsync() =>
+        _created ? JS.InvokeAsync<string>("lt.getValue", _id) : ValueTask.FromResult(_initial);
+
+    public Task SetValueAsync(string code) => JS.InvokeVoidAsync("lt.setValue", _id, code).AsTask();
+
+    /// <summary>把编译诊断显示为编辑器里的波浪线（只标出有行号的诊断）。</summary>
+    public Task SetMarkersAsync(IEnumerable<Diagnostic> diagnostics)
+    {
+        var markers = diagnostics
+            .Where(d => d.Line > 0)
+            .Select(d => new { line = d.Line, column = Math.Max(1, d.Column), severity = d.Severity, message = $"{d.Code}: {d.Message}" })
+            .ToArray();
+        return _created ? JS.InvokeVoidAsync("lt.setMarkers", _id, markers).AsTask() : Task.CompletedTask;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (_created) await JS.InvokeVoidAsync("lt.disposeEditor", _id);
+        }
+        catch (JSDisconnectedException) { }
+        catch (TaskCanceledException) { }
+    }
+}

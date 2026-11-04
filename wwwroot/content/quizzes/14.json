@@ -1,0 +1,40 @@
+{
+  "chapter": "14",
+  "questions": [
+    {
+      "id": "14-1",
+      "type": "single",
+      "prompt": "测量代码耗时时，Stopwatch 比 DateTime.Now 更合适，主要原因是？",
+      "options": [
+        "Stopwatch 不需要引用命名空间",
+        "Stopwatch 使用单调递增的高精度计时器，不受系统时间调整影响",
+        "DateTime.Now 无法获取时间",
+        "Stopwatch 会自动打印耗时"
+      ],
+      "answer": 1,
+      "explain": "系统时间可能被手动或自动调整，做耗时测量应使用单调计时器。"
+    },
+    {
+      "id": "14-2",
+      "type": "single",
+      "prompt": "正则表达式 `\\d+` 匹配的是？",
+      "options": [
+        "一个或多个数字",
+        "一个字母",
+        "任意一个字符",
+        "一个空格"
+      ],
+      "answer": 0,
+      "explain": "\\d 表示数字，+ 表示前面的内容出现一次或多次。"
+    },
+    {
+      "id": "14-3",
+      "type": "code",
+      "prompt": "用 Regex 从字符串 `user=alice id=42` 中取出 id 后面的数字，并输出。",
+      "starter": "using System.Text.RegularExpressions;\n\nvar line = \"user=alice id=42\";\n// 在这里用 Regex 取出数字\n",
+      "expected": "42",
+      "hint": "需要 using System.Text.RegularExpressions;，可以写在文件最上面。",
+      "explain": "括号 () 表示捕获组，Groups[1] 取出第一个括号里匹配的内容。"
+    }
+  ]
+}

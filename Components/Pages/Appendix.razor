@@ -1,0 +1,9 @@
+@page "/appendix/{Id}"
+
+<PageTitle>附录 @Id · C# 自学教程</PageTitle>
+
+<ChapterView Key="@($"appendix-{Id}")" />
+
+@code {
+    [Parameter] public string Id { get; set; } = "";
+}

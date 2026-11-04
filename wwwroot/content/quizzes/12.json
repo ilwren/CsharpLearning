@@ -1,0 +1,39 @@
+{
+  "chapter": "12",
+  "questions": [
+    {
+      "id": "12-1",
+      "type": "single",
+      "prompt": "`await` 的作用是？",
+      "options": [
+        "让当前线程阻塞，直到任务完成",
+        "在任务完成前让出执行权，完成后从 await 处继续",
+        "创建一个新线程",
+        "取消正在运行的任务"
+      ],
+      "answer": 1,
+      "explain": "await 不会阻塞线程，线程可以去做别的事，任务完成后方法从 await 之后继续。"
+    },
+    {
+      "id": "12-2",
+      "type": "single",
+      "prompt": "下面哪一个理解是正确的？",
+      "options": [
+        "异步会让 CPU 计算速度加倍",
+        "异步适合等待 I/O（网络、文件），CPU 密集的计算需要并行而不是异步",
+        "异步一定比同步快",
+        "异步会自动开启所有核心"
+      ],
+      "answer": 1,
+      "explain": "异步解决的是“等待”的问题；要让计算变快，需要并行计算。"
+    },
+    {
+      "id": "12-3",
+      "type": "code",
+      "prompt": "写一个 `async Task<int> ComputeAsync()`，内部 `await Task.Delay(100)` 后返回 42。在顶层用 await 调用它，并输出结果。",
+      "starter": "// 在这里写异步方法并调用\n",
+      "expected": "42",
+      "explain": "顶层语句中可以直接使用 await。"
+    }
+  ]
+}

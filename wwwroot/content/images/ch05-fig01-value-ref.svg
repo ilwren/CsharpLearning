@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.16"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#616161"/></marker></defs><rect x="30" y="20" width="520" height="500" rx="12" fill="#F5F5F5" stroke="#757575" stroke-width="1" filter="url(#md1)"/><text x="54" y="56" font-size="20" fill="#1976D2" text-anchor="start" font-weight="bold">值类型：变量里装的是数据</text><text x="54" y="80" font-size="14" fill="#757575" text-anchor="start">例：int、(string, int)、TimeRange</text>
+<text x="60" y="130" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">b = a 之后</text>
+<rect x="70" y="150" width="130" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="135.0" y="183.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">a  1</text>
+<rect x="300" y="150" width="130" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="365.0" y="183.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">b  1</text>
+<text x="70" y="240" font-size="15" fill="#212121" text-anchor="start">两个变量各有一份数据</text>
+<text x="70" y="270" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">b = 2 之后</text>
+<rect x="70" y="290" width="130" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="135.0" y="323.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">a  1</text>
+<rect x="300" y="290" width="130" height="56" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="365.0" y="323.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">b  2</text>
+<text x="70" y="380" font-size="15" fill="#212121" text-anchor="start">只改了 b，a 不受影响</text>
+<text x="70" y="470" font-size="14" fill="#757575" text-anchor="start">改的是各自那一份，所以互不干扰</text>
+<rect x="580" y="20" width="520" height="500" rx="12" fill="#F5F5F5" stroke="#757575" stroke-width="1" filter="url(#md1)"/><text x="604" y="56" font-size="20" fill="#1976D2" text-anchor="start" font-weight="bold">引用类型：变量里装的是地址</text><text x="604" y="80" font-size="14" fill="#757575" text-anchor="start">例：List&lt;T&gt;、数组、string、class</text>
+<text x="610" y="130" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">list2 = list1 之后</text>
+<rect x="610" y="150" width="110" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="665.0" y="183.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">list1</text>
+<rect x="610" y="220" width="110" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="665.0" y="253.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">list2</text>
+<rect x="820" y="170" width="240" height="70" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="940.0" y="210.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">List&lt;int&gt;  Count = 1</text>
+<line x1="720" y1="178" x2="820" y2="194" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="720" y1="248" x2="820" y2="218" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="610" y="330" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">list2.Add(2) 之后</text>
+<rect x="610" y="350" width="110" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="665.0" y="383.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">list1</text>
+<rect x="610" y="420" width="110" height="56" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="665.0" y="453.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">list2</text>
+<rect x="820" y="370" width="240" height="70" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="940.0" y="410.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">List&lt;int&gt;  Count = 2</text>
+<line x1="720" y1="378" x2="820" y2="394" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="720" y1="448" x2="820" y2="418" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="610" y="510" font-size="14" fill="#757575" text-anchor="start">两个变量装着同一个地址，改对象两边都看得到</text></svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="650" viewBox="0 0 800 650" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.16"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#616161"/></marker></defs><text x="540" y="36" font-size="19" fill="#212121" text-anchor="middle" font-weight="bold">List&lt;T&gt; 的插入与删除，中间的元素会整体移动</text>
+<text x="40" y="100" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">Insert(1, "debug")</text>
+<rect x="40" y="115" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="95.0" y="150.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">info</text>
+<rect x="150" y="115" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="205.0" y="150.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">warn</text>
+<rect x="260" y="115" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="315.0" y="150.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">error</text>
+<rect x="370" y="115" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="480" y="115" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="590" y="115" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<text x="425.0" y="205" font-size="14" fill="#212121" text-anchor="middle">Count = 3，Capacity = 6</text>
+<text x="40" y="240" font-size="15" fill="#212121" text-anchor="start">变成</text>
+<rect x="40" y="260" width="110" height="60" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="95.0" y="295.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">info</text>
+<rect x="150" y="260" width="110" height="60" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="205.0" y="295.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">debug</text>
+<rect x="260" y="260" width="110" height="60" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="315.0" y="295.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">warn</text>
+<rect x="370" y="260" width="110" height="60" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="425.0" y="295.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">error</text>
+<rect x="480" y="260" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="590" y="260" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<text x="425.0" y="350" font-size="14" fill="#212121" text-anchor="middle">warn 和 error 各向右移了一格</text>
+<text x="40" y="410" font-size="16" fill="#212121" text-anchor="start" font-weight="bold">RemoveAt(1)</text>
+<rect x="40" y="425" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="95.0" y="460.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">info</text>
+<rect x="150" y="425" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="205.0" y="460.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">debug</text>
+<rect x="260" y="425" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="315.0" y="460.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">warn</text>
+<rect x="370" y="425" width="110" height="60" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="425.0" y="460.6666666666667" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">error</text>
+<rect x="480" y="425" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="590" y="425" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<text x="40" y="515" font-size="15" fill="#212121" text-anchor="start">变成</text>
+<rect x="40" y="535" width="110" height="60" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="95.0" y="570.6666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">info</text>
+<rect x="150" y="535" width="110" height="60" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="205.0" y="570.6666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">warn</text>
+<rect x="260" y="535" width="110" height="60" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="315.0" y="570.6666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">error</text>
+<rect x="370" y="535" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="480" y="535" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<rect x="590" y="535" width="110" height="60" rx="12" fill="#FFFFFF" stroke="#BDBDBD" stroke-width="1" stroke-dasharray="5 4" filter="url(#md1)"/>
+<text x="425.0" y="620" font-size="14" fill="#212121" text-anchor="middle">后面的元素整体向左补上，空格子不保留</text></svg>

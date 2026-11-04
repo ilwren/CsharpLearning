@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.16"/></filter></defs>
+<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#616161"/></marker></defs>
+
+<text x="500" y="34" font-size="19" fill="#212121" text-anchor="middle" font-weight="bold">if / else if / else：从上往下检查，哪个先成立就执行哪个</text>
+<polygon points="400,65.0 530.0,110 400,155.0 270.0,110" fill="#FFF3E0" stroke="#E65100" stroke-width="2"/><text x="400" y="116" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">ms &gt; 1000 ?</text>
+<line x1="530" y1="110" x2="640" y2="110" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="572" y="102" font-size="15" fill="#212121">是</text>
+<rect x="640" y="65" width="240" height="90" rx="12" fill="#FFEBEE" stroke="#C62828" stroke-width="2" filter="url(#md1)"/><text x="760.0" y="116.0" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">慢请求</text>
+<line x1="400" y1="155" x2="400" y2="205" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="410" y="185" font-size="15" fill="#212121">否</text>
+<polygon points="400,205.0 530.0,250 400,295.0 270.0,250" fill="#FFF3E0" stroke="#E65100" stroke-width="2"/><text x="400" y="256" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">ms &gt; 300 ?</text>
+<line x1="530" y1="250" x2="640" y2="250" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="572" y="242" font-size="15" fill="#212121">是</text>
+<rect x="640" y="205" width="240" height="90" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="760.0" y="256.0" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">一般</text>
+<line x1="400" y1="295" x2="400" y2="325" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<text x="410" y="315" font-size="15" fill="#212121">否</text>
+<rect x="300" y="325" width="200" height="55" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="400.0" y="358.5" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold">快（else）</text>
+</svg>

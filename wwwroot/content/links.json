@@ -1,0 +1,43 @@
+{
+  "00": [
+    { "title": ".NET 10 SDK 下载页（选 SDK，不选 Runtime）", "url": "https://dotnet.microsoft.com/download/dotnet/10.0" },
+    { "title": "在 Windows 上安装 .NET", "url": "https://learn.microsoft.com/dotnet/core/install/windows" },
+    { "title": "在 Linux 上安装 .NET", "url": "https://learn.microsoft.com/dotnet/core/install/linux" },
+    { "title": "在 macOS 上安装 .NET", "url": "https://learn.microsoft.com/dotnet/core/install/macos" },
+    { "title": "NuGet 包源", "url": "https://www.nuget.org/" }
+  ],
+  "01": [
+    { "title": "C# 官方导览（Tour of C#）", "url": "https://learn.microsoft.com/dotnet/csharp/tour-of-csharp/" },
+    { "title": "dotnet 命令行工具参考", "url": "https://learn.microsoft.com/dotnet/core/tools/" },
+    { "title": "System.Console 类型说明", "url": "https://learn.microsoft.com/dotnet/fundamentals/runtime-libraries/system-console" },
+    { "title": "Console.ReadLine 方法", "url": "https://learn.microsoft.com/dotnet/api/system.console.readline" }
+  ],
+  "02": [
+    { "title": "C# 类型概述", "url": "https://learn.microsoft.com/dotnet/csharp/fundamentals/types/" },
+    { "title": "C# 运算符", "url": "https://learn.microsoft.com/dotnet/csharp/language-reference/operators/" }
+  ],
+  "04": [
+    { "title": ".NET 集合类型概览", "url": "https://learn.microsoft.com/dotnet/standard/collections/" }
+  ],
+  "10": [
+    { "title": "LINQ（语言集成查询）", "url": "https://learn.microsoft.com/dotnet/csharp/linq/" }
+  ],
+  "11": [
+    { "title": "C# 异常处理", "url": "https://learn.microsoft.com/dotnet/csharp/fundamentals/exceptions/exception-handling" },
+    { "title": "dotnet 测试与诊断工具概览", "url": "https://learn.microsoft.com/dotnet/core/testing/" }
+  ],
+  "12": [
+    { "title": "C# 异步编程", "url": "https://learn.microsoft.com/dotnet/csharp/asynchronous-programming/" }
+  ],
+  "13": [
+    { "title": "托管线程最佳实践", "url": "https://learn.microsoft.com/dotnet/standard/threading/managed-threading-best-practices" }
+  ],
+  "14": [
+    { "title": "正则表达式语言速查", "url": "https://learn.microsoft.com/dotnet/standard/base-types/regular-expression-language-quick-reference" },
+    { "title": "System.Text.Json 概览", "url": "https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/overview" }
+  ],
+  "15": [
+    { "title": "C# 14 新功能", "url": "https://learn.microsoft.com/dotnet/csharp/whats-new/csharp-14" },
+    { "title": "C# 语言参考", "url": "https://learn.microsoft.com/dotnet/csharp/language-reference/" }
+  ]
+}

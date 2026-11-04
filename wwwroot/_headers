@@ -1,0 +1,9 @@
+# Cloudflare Pages：响应头
+# 跨源隔离（COOP + COEP）：运行器需要 SharedArrayBuffer 与 Atomics.wait 来实现阻塞式输入。
+# 站点全部资源都与页面同源；跨源资源（Google Fonts）已在 index.html 中加 crossorigin 属性。
+
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

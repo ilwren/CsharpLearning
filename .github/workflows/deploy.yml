@@ -1,0 +1,43 @@
+# 构建并部署到 Cloudflare Pages。
+# 需要在 GitHub 仓库的 Settings → Secrets and variables → Actions 中设置：
+#   CLOUDFLARE_API_TOKEN   （权限：Account · Cloudflare Pages · Edit）
+#   CLOUDFLARE_ACCOUNT_ID
+# 并把下面的 PROJECT_NAME 改成你在 Cloudflare 中创建的 Pages 项目名。
+name: 部署到 Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+env:
+  PROJECT_NAME: csharp-learning
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: 构建站点（含浏览器运行器）
+        run: ./scripts/build-site.sh
+
+      - name: 部署
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy build/publish/wwwroot --project-name=${{ env.PROJECT_NAME }} --branch=main

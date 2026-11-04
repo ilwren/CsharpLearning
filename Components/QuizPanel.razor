@@ -1,0 +1,223 @@
+@inject ContentStore Content
+@inject QuizGrader Grader
+
+@if (_quiz is null)
+{
+    <MudAlert Severity="Severity.Info" Class="mt-6">本章的练习题正在制作中，敬请期待。</MudAlert>
+}
+else
+{
+    <MudPaper Class="pa-4 mt-6 lt-panel" Elevation="1">
+        <MudText Typo="Typo.h5" Class="mb-1">本章练习</MudText>
+        <MudText Typo="Typo.body2" Class="mb-4">
+            共 @_quiz.Questions.Count 题。选择题直接作答；编程题在编辑器里写出完整程序，点“批改”后会真正编译、运行，并与预期输出比对。
+        </MudText>
+
+        @for (int i = 0; i < _quiz.Questions.Count; i++)
+        {
+            var q = _quiz.Questions[i];
+            var number = i + 1;
+            var result = _results?.GetValueOrDefault(q.Id);
+
+            <div class="lt-question" @key="q.Id">
+                <MudText Typo="Typo.subtitle1"><b>第 @number 题</b>（@TypeLabel(q.Type)）</MudText>
+                <MudText Typo="Typo.body1" Class="mb-2">@Inline(q.Prompt)</MudText>
+
+                @if (q.Type == "code")
+                {
+                    <CodeEditor @ref="_editors[q.Id]" Value="@(q.Starter ?? "")" Height="240px" />
+                    @if (!string.IsNullOrEmpty(q.Hint))
+                    {
+                        <MudText Typo="Typo.body2" Class="mt-1 lt-hint">提示：@Inline(q.Hint)</MudText>
+                    }
+                }
+                else if (q.Options is not null && q.Type == "single")
+                {
+                    <MudRadioGroup T="int" Value="@_single.GetValueOrDefault(q.Id, -1)"
+                                   ValueChanged="@((int v) => SetSingle(q.Id, v))">
+                        @for (int j = 0; j < q.Options.Count; j++)
+                        {
+                            var optionIndex = j;
+                            <MudRadio T="int" Value="@optionIndex" Color="Color.Primary">@Inline(q.Options[optionIndex])</MudRadio>
+                        }
+                    </MudRadioGroup>
+                }
+                else if (q.Options is not null)
+                {
+                    @for (int j = 0; j < q.Options.Count; j++)
+                    {
+                        var optionIndex = j;
+                        <MudCheckBox T="bool" Label="@Plain(q.Options[optionIndex])" Color="Color.Primary" Dense="true"
+                                     Value="@IsChecked(q.Id, optionIndex)"
+                                     ValueChanged="@((bool v) => ToggleMulti(q.Id, optionIndex, v))" />
+                    }
+                }
+
+                @if (result is not null)
+                {
+                    <MudAlert Severity="@(result.Correct ? Severity.Success : Severity.Error)" Dense="true" Class="mt-2">
+                        @result.Message
+                    </MudAlert>
+
+                    @foreach (var d in result.Diagnostics.Where(d => d.Severity == "error"))
+                    {
+                        <div class="lt-diag error">
+                            <span class="lt-diag-where">@(d.Line > 0 ? $"第 {d.Line} 行" : "项目级")</span>
+                            <code>@d.Code</code> @d.Message
+                        </div>
+                    }
+
+                    @if (q.Type == "code" && result.ActualOutput is not null)
+                    {
+                        <div class="lt-output-title">你的程序输出</div>
+                        <pre class="lt-output">@result.ActualOutput</pre>
+                    }
+
+                    @if (!string.IsNullOrEmpty(q.Explain))
+                    {
+                        <MudText Typo="Typo.body2" Class="lt-explain">解析：@Inline(q.Explain)</MudText>
+                    }
+                }
+            </div>
+        }
+
+        <div class="d-flex gap-2 mt-4 align-center flex-wrap">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="_busy" OnClick="GradeAsync">
+                @(_busy ? "批改中…" : "批改")
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="ResetAnswers">重新作答</MudButton>
+            @if (_results is not null)
+            {
+                <MudChip T="string" Color="@(_score == _quiz.Questions.Count ? Color.Success : Color.Warning)" Variant="Variant.Filled">
+                    得分 @_score / @_quiz.Questions.Count
+                </MudChip>
+            }
+        </div>
+    </MudPaper>
+}
+
+@code {
+    [Parameter] public string Key { get; set; } = "";
+
+    private Quiz? _quiz;
+    private string? _loadedKey;
+    private readonly Dictionary<string, int> _single = new();
+    private readonly Dictionary<string, HashSet<int>> _multi = new();
+    private readonly Dictionary<string, CodeEditor> _editors = new();
+    private Dictionary<string, QuestionResult>? _results;
+    private bool _busy;
+
+    private int _score => _results?.Values.Count(r => r.Correct) ?? 0;
+
+    protected override void OnParametersSet()
+    {
+        if (_loadedKey == Key) return;
+        _loadedKey = Key;
+        _quiz = Content.GetQuiz(Key);
+        _single.Clear();
+        _multi.Clear();
+        _editors.Clear();
+        _results = null;
+    }
+
+    private static string TypeLabel(string type) => type switch
+    {
+        "single" => "单选题",
+        "multiple" => "多选题",
+        "code" => "编程题",
+        _ => "题目",
+    };
+
+    private void SetSingle(string id, int value)
+    {
+        _single[id] = value;
+    }
+
+    /// <summary>题目文字里成对的反引号渲染为行内代码；其余文字做 HTML 转义。</summary>
+    private static MarkupString Inline(string? text)
+    {
+        if (string.IsNullOrEmpty(text)) return new MarkupString("");
+        var parts = text.Split('`');
+        var sb = new System.Text.StringBuilder();
+        for (int i = 0; i < parts.Length; i++)
+        {
+            var enc = System.Net.WebUtility.HtmlEncode(parts[i]);
+            if (i % 2 == 1) sb.Append("<code>").Append(enc).Append("</code>");
+            else sb.Append(enc);
+        }
+        return new MarkupString(sb.ToString());
+    }
+
+    /// <summary>复选框标签只能是纯文本，去掉反引号。</summary>
+    private static string Plain(string text) => text.Replace("`", "");
+
+    private bool IsChecked(string id, int option) =>
+        _multi.TryGetValue(id, out var set) && set.Contains(option);
+
+    private void ToggleMulti(string id, int option, bool on)
+    {
+        if (!_multi.TryGetValue(id, out var set))
+        {
+            set = new HashSet<int>();
+            _multi[id] = set;
+        }
+        if (on) set.Add(option); else set.Remove(option);
+    }
+
+    private async Task GradeAsync()
+    {
+        if (_quiz is null) return;
+        _busy = true;
+        try
+        {
+            var results = new Dictionary<string, QuestionResult>();
+            foreach (var q in _quiz.Questions)
+            {
+                if (q.Type == "code")
+                {
+                    _editors.TryGetValue(q.Id, out var editor);
+                    var code = editor is not null ? await editor.GetValueAsync() : (q.Starter ?? "");
+                    var r = await Grader.GradeCodeAsync(q, code);
+                    if (editor is not null)
+                    {
+                        await editor.SetMarkersAsync(r.Diagnostics);
+                    }
+                    results[q.Id] = r;
+                }
+                else
+                {
+                    IReadOnlyCollection<int> selected;
+                    if (q.Type == "multiple")
+                    {
+                        selected = _multi.TryGetValue(q.Id, out var set) ? set.ToList() : [];
+                    }
+                    else
+                    {
+                        selected = _single.TryGetValue(q.Id, out var v) ? new[] { v } : Array.Empty<int>();
+                    }
+                    results[q.Id] = Grader.GradeChoice(q, selected);
+                }
+            }
+            _results = results;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private void ResetAnswers()
+    {
+        _single.Clear();
+        _multi.Clear();
+        _results = null;
+        if (_quiz is null) return;
+        foreach (var q in _quiz.Questions.Where(q => q.Type == "code"))
+        {
+            if (_editors.TryGetValue(q.Id, out var editor))
+            {
+                _ = editor.SetValueAsync(q.Starter ?? "");
+            }
+        }
+    }
+}

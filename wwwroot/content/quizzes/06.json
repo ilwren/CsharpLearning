@@ -1,0 +1,39 @@
+{
+  "chapter": "06",
+  "questions": [
+    {
+      "id": "06-1",
+      "type": "single",
+      "prompt": "`record` 类型的一个主要特点是？",
+      "options": [
+        "默认按字段的值比较相等",
+        "不能有任何属性",
+        "必须继承自 object 以外的类",
+        "只能用于集合"
+      ],
+      "answer": 0,
+      "explain": "record 默认根据所有字段的值判断相等，适合表示数据。"
+    },
+    {
+      "id": "06-2",
+      "type": "single",
+      "prompt": "构造函数的主要作用是？",
+      "options": [
+        "在对象创建时执行初始化",
+        "在对象销毁时释放资源",
+        "声明一个静态字段",
+        "把类标记为抽象"
+      ],
+      "answer": 0,
+      "explain": "构造函数在 new 的时候运行，用来设置对象的初始状态。"
+    },
+    {
+      "id": "06-3",
+      "type": "code",
+      "prompt": "定义 `record Point(int X, int Y)`，创建 `new Point(3, 4)`，输出 `X=3, Y=4`。",
+      "starter": "// 在这里定义 record 并输出\n",
+      "expected": "X=3, Y=4",
+      "explain": "位置参数的 record 会自动生成属性、构造函数和按值比较的相等判断。"
+    }
+  ]
+}

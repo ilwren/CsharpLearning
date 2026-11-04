@@ -1,0 +1,9 @@
+@page "/chapter/{Key}"
+
+<PageTitle>第 @Key 章 · C# 自学教程</PageTitle>
+
+<ChapterView Key="@Key" />
+
+@code {
+    [Parameter] public string Key { get; set; } = "";
+}

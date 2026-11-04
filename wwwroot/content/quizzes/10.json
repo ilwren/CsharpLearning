@@ -1,0 +1,40 @@
+{
+  "chapter": "10",
+  "questions": [
+    {
+      "id": "10-1",
+      "type": "single",
+      "prompt": "LINQ 的 `Where` 方法返回的是？",
+      "options": [
+        "满足条件的元素序列（惰性，遍历时才计算）",
+        "第一个满足条件的元素",
+        "满足条件的元素个数",
+        "原集合被修改后的自身"
+      ],
+      "answer": 0,
+      "explain": "Where 返回的是一个查询，真正计算发生在遍历或调用 ToList() 时。"
+    },
+    {
+      "id": "10-2",
+      "type": "single",
+      "prompt": "关于 LINQ 的延迟执行，正确的说法是？",
+      "options": [
+        "查询在定义时就立即执行",
+        "查询在被遍历（foreach、ToList 等）时才执行",
+        "ToList 不会执行查询",
+        "Where 会修改原始数据"
+      ],
+      "answer": 1,
+      "explain": "如果数据在定义和遍历之间发生了变化，遍历时看到的是变化后的结果。"
+    },
+    {
+      "id": "10-3",
+      "type": "code",
+      "prompt": "给定 `var nums = new[] { 1, 2, 3, 4, 5, 6 };`，用 LINQ 筛出偶数，每个乘以 10，然后每行输出一个结果。",
+      "starter": "var nums = new[] { 1, 2, 3, 4, 5, 6 };\n// 在这里用 LINQ 输出\n",
+      "expected": "20\n40\n60",
+      "hint": "Where 负责筛选，Select 负责转换。",
+      "explain": "Where 和 Select 都接收 lambda，这正是委托的用法。"
+    }
+  ]
+}

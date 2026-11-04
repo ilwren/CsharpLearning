@@ -1,0 +1,39 @@
+{
+  "chapter": "09",
+  "questions": [
+    {
+      "id": "09-1",
+      "type": "single",
+      "prompt": "委托（delegate）的本质是？",
+      "options": [
+        "能保存“方法引用”的类型，可以把方法当作值来传递",
+        "一种循环语句",
+        "一种异常类型",
+        "一个 namespace"
+      ],
+      "answer": 0,
+      "explain": "委托让你把“做什么”作为参数传给别人。"
+    },
+    {
+      "id": "09-2",
+      "type": "single",
+      "prompt": "事件（event）比直接暴露一个委托字段好在哪里？",
+      "options": [
+        "事件只允许外部用 += 和 -= 订阅或取消，不能直接调用或清空",
+        "事件运行更快",
+        "事件不需要参数",
+        "事件可以代替类"
+      ],
+      "answer": 0,
+      "explain": "事件把订阅和触发的权限分开，外部代码不能随意触发别人的通知。"
+    },
+    {
+      "id": "09-3",
+      "type": "code",
+      "prompt": "用 `Func<int, int> twice = x => x * 2;` 定义一个委托，再写方法 `Apply(Func<int, int> f, int v)` 返回 f(v)。输出 Apply(twice, 5) 的结果。",
+      "starter": "// 在这里写委托与方法\n",
+      "expected": "10",
+      "explain": "Func<T, TResult> 是系统提供的泛型委托，最后一个类型参数是返回值。"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="730" viewBox="0 0 1120 730" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.45"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B0B0B0"/></marker></defs><rect x="30" y="20" width="1060" height="260" rx="12" fill="#262626" stroke="#9E9E9E" stroke-width="1" filter="url(#md1)"/><text x="54" y="56" font-size="20" fill="#90CAF9" text-anchor="start" font-weight="bold">值类型参数：方法里的是一份副本</text>
+<rect x="70" y="80" width="300" height="130" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="150.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold"></text>
+<text x="90" y="108" font-size="15" fill="#9E9E9E" text-anchor="start">Main 的栈帧</text>
+<rect x="90" y="124" width="260" height="50" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="154.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">value  1</text>
+<rect x="560" y="80" width="300" height="130" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="710.0" y="150.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold"></text>
+<text x="580" y="108" font-size="15" fill="#9E9E9E" text-anchor="start">ChangeNumber 的栈帧</text>
+<rect x="580" y="124" width="260" height="50" rx="12" fill="#3D2A12" stroke="#FFB74D" stroke-width="2" filter="url(#md1)"/><text x="710.0" y="154.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">number  999</text>
+<line x1="350" y1="149" x2="580" y2="149" stroke="#B0B0B0" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+<text x="465" y="140" font-size="14" fill="#9E9E9E" text-anchor="middle">复制一份</text>
+<text x="70" y="244" font-size="15" fill="#ECECEC" text-anchor="start">number 改成 999 之后，value 仍然是 1</text>
+<rect x="30" y="300" width="1060" height="410" rx="12" fill="#262626" stroke="#9E9E9E" stroke-width="1" filter="url(#md1)"/><text x="54" y="336" font-size="20" fill="#90CAF9" text-anchor="start" font-weight="bold">引用类型参数：方法里的是地址的副本</text>
+<rect x="70" y="350" width="300" height="130" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="420.6666666666667" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold"></text>
+<text x="90" y="378" font-size="15" fill="#9E9E9E" text-anchor="start">Main 的栈帧</text>
+<rect x="90" y="394" width="260" height="50" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="424.6666666666667" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">list  →</text>
+<rect x="70" y="510" width="300" height="130" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="580.6666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold"></text>
+<text x="90" y="538" font-size="15" fill="#9E9E9E" text-anchor="start">Reassign 的栈帧</text>
+<rect x="90" y="554" width="260" height="50" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="220.0" y="584.6666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">items  →</text>
+<rect x="560" y="350" width="340" height="70" rx="12" fill="#1D3A21" stroke="#A5D6A7" stroke-width="2" filter="url(#md1)"/><text x="730.0" y="390.6666666666667" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">List A  Count = 1</text>
+<rect x="560" y="540" width="340" height="70" rx="12" fill="#1D3A21" stroke="#A5D6A7" stroke-width="2" filter="url(#md1)"/><text x="730.0" y="580.6666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">List B  Count = 0</text>
+<line x1="350" y1="419" x2="560" y2="385" stroke="#B0B0B0" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="350" y1="579" x2="560" y2="575" stroke="#B0B0B0" stroke-width="2" marker-end="url(#arr)"/>
+<text x="450" y="470" font-size="14" fill="#9E9E9E" text-anchor="middle">items = new ... 之后</text>
+<text x="450" y="492" font-size="14" fill="#9E9E9E" text-anchor="middle">方法只改了 items 的指向</text>
+<text x="560" y="650" font-size="15" fill="#ECECEC" text-anchor="start">list 仍指向 List A，外面看不到变化</text>
+<text x="560" y="680" font-size="14" fill="#9E9E9E" text-anchor="start">但如果调用 items.Add，List A 的内容会变，外面能看到</text></svg>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <title>C# 自学教程</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <!-- 开启跨源隔离后（COEP require-corp），跨源样式表需要 crossorigin 属性才能加载 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" crossorigin="anonymous" />
+    <link rel="stylesheet" href="_content/MudBlazor/MudBlazor.min.css" />
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="LearnSite.styles.css" />
+</head>
+
+<body>
+    <div id="app">
+        <div style="padding: 48px 16px; text-align: center; font-family: sans-serif; color: #666;">正在加载教程…</div>
+    </div>
+    <div id="blazor-error-ui" style="display: none;">
+        出错了，请刷新页面。
+    </div>
+    <!-- 代码运行器（Web Worker，见 js/runner.js 与 runner/）需在 Blazor 之前加载 -->
+    <script src="js/runner.js"></script>
+    <script src="js/site.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>

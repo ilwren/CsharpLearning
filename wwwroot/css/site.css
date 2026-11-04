@@ -1,0 +1,709 @@
+/* 站点样式：正文排版、代码块、平台分页、自测、编辑器容器、编译输出。
+   颜色尽量跟随 MudBlazor 的主题变量，深浅主题都能用。 */
+
+html, body {
+    font-family: Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.lt-brand {
+    color: inherit;
+    text-decoration: none;
+}
+
+.lt-main {
+    max-width: 1100px;
+}
+
+.lt-card {
+    transition: transform 0.15s ease;
+}
+.lt-card:hover {
+    transform: translateY(-2px);
+}
+
+/* 首页目录卡片：同一行的卡片等高，标题在上、标签贴底 */
+.lt-home-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.lt-home-card .mud-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.lt-anchor {
+    scroll-margin-top: 90px;
+}
+
+/* ---------- 章节头部：推荐阅读时长与字数 ---------- */
+.lt-chapter-head {
+    margin-bottom: 0.4em;
+}
+
+.lt-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0.6em 0 0;
+}
+
+/* ---------- 章节正文 ---------- */
+.lt-article {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--mud-palette-text-primary);
+    overflow-wrap: anywhere;
+}
+
+.lt-article h1 {
+    font-size: 2rem;
+    margin: 0.2em 0 0.6em;
+    font-weight: 700;
+}
+
+.lt-article h2 {
+    font-size: 1.5rem;
+    margin: 1.8em 0 0.6em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+
+.lt-article h3 {
+    font-size: 1.2rem;
+    margin: 1.4em 0 0.5em;
+}
+
+.lt-article h4 {
+    font-size: 1.05rem;
+    margin: 1.2em 0 0.4em;
+}
+
+.lt-article p,
+.lt-article ul,
+.lt-article ol {
+    margin: 0.6em 0;
+}
+
+/* 章节锚点：只占位，不占行高，滚动时留出顶栏的高度 */
+.lt-article p:has(> .lt-anchor-target) {
+    margin: 0;
+    height: 0;
+}
+.lt-anchor-target {
+    display: block;
+    height: 0;
+    scroll-margin-top: 84px;
+}
+
+.lt-article a {
+    color: var(--mud-palette-primary);
+    text-underline-offset: 3px;
+}
+
+.lt-article blockquote {
+    margin: 1em 0;
+    padding: 0.4em 1em;
+    border-left: 4px solid var(--mud-palette-primary);
+    background: var(--mud-palette-background-gray);
+    border-radius: 4px;
+}
+
+.lt-article blockquote p {
+    margin: 0.3em 0;
+}
+
+.lt-article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto;
+}
+
+.lt-article th,
+.lt-article td {
+    border: 1px solid var(--mud-palette-lines-default);
+    padding: 0.4em 0.6em;
+    vertical-align: top;
+}
+
+.lt-article th {
+    background: var(--mud-palette-background-gray);
+    text-align: left;
+}
+
+/* ---------- 图片与注释 ---------- */
+/* 插图 + 来源注释：整体是一张圆角卡片，注释贴在卡片底部，宽度与图片一致。
+   自绘 SVG 不带底色，卡片底色随主题切换；深色底与深色 SVG 的设计底色一致 */
+.lt-article .lt-figure {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 1.4em auto;
+    padding: 0;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.lt-article .lt-figure img {
+    max-width: 100%;
+    max-height: 640px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    padding: 14px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+/* 深浅两套插图：页面只显示当前主题对应的那一张 */
+.lt-article img.lt-img-dark {
+    display: none;
+}
+
+html[data-theme="dark"] .lt-article .lt-figure {
+    background: #121212;
+    border-color: #3a3a3a;
+    box-shadow: none;
+}
+
+html[data-theme="dark"] .lt-article img.lt-img-light {
+    display: none;
+}
+
+html[data-theme="dark"] .lt-article img.lt-img-dark {
+    display: block;
+}
+
+.lt-figure img,
+.lt-article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.lt-article img {
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--mud-palette-lines-default);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.lt-note {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    max-width: 46rem;
+    margin: 0.6em auto 0;
+    padding: 0.4em 0.8em;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--mud-palette-text-secondary);
+    background: var(--mud-palette-background-gray);
+    border-left: 3px solid var(--mud-palette-primary);
+    border-radius: 0 6px 6px 0;
+}
+
+/* 插图底部的注释：小字图注，与图片同宽，细分隔线在上方，和正文明显区分 */
+.lt-article .lt-figure > figcaption.lt-note {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0.55em 1em 0.6em;
+    border: none;
+    border-top: 1px solid var(--mud-palette-lines-default);
+    border-radius: 0;
+    background: transparent;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: var(--mud-palette-text-secondary);
+    text-align: left;
+}
+
+.lt-article .lt-figure > figcaption.lt-note .lt-note-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+.lt-note-tag {
+    flex: none;
+    font-weight: 600;
+    color: var(--mud-palette-primary);
+}
+
+/* ---------- 行内代码 ---------- */
+.lt-article :not(pre) > code {
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: var(--mud-palette-background-gray);
+}
+
+/* ---------- 代码块：工具条 + 代码（缩进统一为 4 个空格宽） ---------- */
+.lt-article .lt-codeblock {
+    margin: 1em 0;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--mud-palette-background-gray);
+}
+
+.lt-codebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 8px 4px 12px;
+    font-size: 12px;
+    background: var(--mud-palette-surface);
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+
+.lt-codebar-lang {
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    color: var(--mud-palette-text-secondary);
+    letter-spacing: 0.02em;
+}
+
+.lt-codebar-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.lt-codebar-btn {
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 1px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--mud-palette-lines-default);
+    background: transparent;
+    color: var(--mud-palette-text-secondary);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.lt-codebar-btn:hover {
+    color: var(--mud-palette-primary);
+    border-color: var(--mud-palette-primary);
+}
+.lt-codebar-btn.ok {
+    color: var(--mud-palette-success);
+    border-color: var(--mud-palette-success);
+}
+
+.lt-article .lt-codeblock > pre {
+    position: static;
+    margin: 0;
+    padding: 0.9em 1em;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    overflow-x: auto;
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    white-space: pre;
+    tab-size: 4;
+    -moz-tab-size: 4;
+}
+
+.lt-article pre code {
+    background: none;
+    padding: 0;
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* 没有工具条的代码块（极少见）仍然保留基本样式 */
+.lt-article pre:not(.lt-codeblock pre) {
+    margin: 1em 0;
+    padding: 0.9em 1em;
+    border-radius: 6px;
+    background: var(--mud-palette-background-gray);
+    border: 1px solid var(--mud-palette-lines-default);
+    overflow-x: auto;
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* ---------- 系统差异：平台分页 ---------- */
+.lt-tabs {
+    margin: 1em 0;
+}
+
+.lt-tabs-bar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: 0.6em;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 999px;
+    background: var(--mud-palette-background-gray);
+}
+
+.lt-tabs-label {
+    padding: 0 10px 0 8px;
+    font-size: 12px;
+    color: var(--mud-palette-text-secondary);
+}
+
+.lt-tab {
+    border: 0;
+    padding: 4px 16px;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 13px;
+    color: var(--mud-palette-text-secondary);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.lt-tab:hover {
+    color: var(--mud-palette-text-primary);
+}
+.lt-tab.active {
+    background: var(--mud-palette-primary);
+    color: var(--mud-palette-primary-text);
+    font-weight: 600;
+}
+
+.lt-tabs-page[hidden] {
+    display: none;
+}
+
+/* ---------- 自测清单：可勾选 ---------- */
+.lt-progress {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 1em 0 0.4em;
+    font-size: 0.9rem;
+    color: var(--mud-palette-text-secondary);
+}
+
+.lt-progress-bar {
+    flex: 1;
+    min-width: 120px;
+    max-width: 260px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--mud-palette-lines-default);
+    overflow: hidden;
+}
+
+.lt-progress-fill {
+    height: 100%;
+    background: var(--mud-palette-primary);
+    transition: width 0.2s ease;
+}
+
+.lt-progress.complete .lt-progress-text {
+    color: var(--mud-palette-success);
+    font-weight: 600;
+}
+
+.lt-article ul:has(> li.lt-check-item) {
+    padding-left: 0;
+    list-style: none;
+}
+
+.lt-article li.lt-check-item {
+    position: relative;
+    list-style: none;
+    padding: 0.45em 0.6em 0.45em 2.3em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.lt-article li.lt-check-item:hover {
+    background: var(--mud-palette-background-gray);
+}
+
+.lt-article input.lt-check {
+    position: absolute;
+    left: 0.6em;
+    top: 0.72em;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--mud-palette-primary);
+}
+
+.lt-article li.lt-check-item:has(input.lt-check:checked) {
+    color: var(--mud-palette-text-secondary);
+    text-decoration: line-through;
+    text-decoration-color: var(--mud-palette-lines-default);
+}
+
+/* ---------- 折叠答案（参考答案、提示） ---------- */
+.lt-article details {
+    margin: 1em 0;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 10px;
+    background: var(--mud-palette-surface);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+.lt-article details[open] {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.lt-article details > summary {
+    position: relative;
+    list-style: none;
+    cursor: pointer;
+    padding: 0.7em 1em 0.7em 2.6em;
+    font-weight: 600;
+    color: var(--mud-palette-primary);
+    background: var(--mud-palette-background-gray);
+    user-select: none;
+}
+.lt-article details > summary::-webkit-details-marker {
+    display: none;
+}
+.lt-article details > summary::before {
+    content: "";
+    position: absolute;
+    left: 1.05em;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-70%) rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+.lt-article details[open] > summary::before {
+    transform: translateY(-30%) rotate(45deg);
+}
+.lt-article details > summary:hover {
+    filter: brightness(0.97);
+}
+.lt-article details[open] > summary {
+    border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+.lt-article details > :not(summary) {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.lt-article details > :not(summary):first-of-type {
+    margin-top: 0.8em;
+}
+.lt-article details > :last-child {
+    margin-bottom: 1em;
+}
+
+/* ---------- 延伸阅读 ---------- */
+.lt-link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lt-link-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    padding: 0.55em 0;
+    border-bottom: 1px dashed var(--mud-palette-lines-default);
+}
+.lt-link-list li:last-child {
+    border-bottom: none;
+}
+
+.lt-ext-link {
+    font-weight: 500;
+}
+
+.lt-link-url {
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    color: var(--mud-palette-text-secondary);
+    word-break: break-all;
+}
+
+/* ---------- 编辑器 ---------- */
+.lt-editor {
+    width: 100%;
+    min-height: 120px;
+}
+
+.lt-editor-host {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--mud-palette-lines-default);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.lt-editor-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+}
+
+/* 程序等待输入时才出现的输入行 */
+.lt-input-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px dashed var(--mud-palette-primary);
+    background: var(--mud-palette-background-gray);
+}
+.lt-input-prompt {
+    font-size: 0.85rem;
+    color: var(--mud-palette-primary);
+    white-space: nowrap;
+}
+.lt-input-field {
+    flex: 1 1 200px;
+    min-width: 120px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--mud-palette-lines-inputs);
+    background: var(--mud-palette-surface);
+    color: var(--mud-palette-text-primary);
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.92rem;
+    outline: none;
+}
+.lt-input-field:focus {
+    border-color: var(--mud-palette-primary);
+}
+
+.lt-output-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 0.8em;
+}
+.lt-output-status {
+    font-size: 0.8rem;
+    color: var(--mud-palette-text-secondary);
+}
+.lt-seg-input {
+    color: var(--mud-palette-primary);
+    font-weight: 600;
+}
+.lt-seg-system {
+    color: var(--mud-palette-text-secondary);
+    font-style: italic;
+}
+.lt-seg-error {
+    color: var(--mud-palette-error);
+}
+
+/* ---------- 面板、题目 ---------- */
+.lt-panel {
+    border-radius: 8px;
+}
+
+.lt-question {
+    padding: 1em 0;
+    border-top: 1px dashed var(--mud-palette-lines-default);
+}
+.lt-question:first-of-type {
+    border-top: none;
+}
+
+.lt-question code {
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.9em;
+    padding: 0.05em 0.3em;
+    border-radius: 4px;
+    background: var(--mud-palette-background-gray);
+}
+
+.lt-hint {
+    color: var(--mud-palette-text-secondary);
+}
+
+.lt-explain {
+    margin-top: 0.5em;
+    color: var(--mud-palette-text-secondary);
+}
+
+/* ---------- 编译与运行输出 ---------- */
+.lt-output-title {
+    margin-top: 0.8em;
+    font-size: 0.85rem;
+    color: var(--mud-palette-text-secondary);
+}
+
+.lt-output {
+    margin: 0.3em 0 0;
+    padding: 0.7em 0.9em;
+    border-radius: 6px;
+    background: var(--mud-palette-background-gray);
+    border: 1px solid var(--mud-palette-lines-default);
+    font-family: "Cascadia Code", Consolas, "JetBrains Mono", monospace;
+    font-size: 0.88rem;
+    white-space: pre-wrap;
+    max-height: 320px;
+    overflow: auto;
+    tab-size: 4;
+}
+
+.lt-output-err {
+    color: var(--mud-palette-error);
+}
+
+.lt-diag {
+    margin: 0.4em 0;
+    padding: 0.4em 0.7em;
+    border-radius: 4px;
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 0.88rem;
+    background: var(--mud-palette-background-gray);
+}
+.lt-diag.error {
+    border-left: 3px solid var(--mud-palette-error);
+}
+.lt-diag.warning {
+    border-left: 3px solid var(--mud-palette-warning);
+}
+.lt-diag-where {
+    font-weight: 600;
+    margin-right: 0.6em;
+}
+
+/* 深色主题下的小调整：代码块背景略深一点，看着更舒服 */
+[data-theme="dark"] .lt-article pre,
+[data-theme="dark"] .lt-output {
+    background: #1e1e1e;
+}
+[data-theme="dark"] .lt-article .lt-codeblock {
+    background: #1e1e1e;
+}
+[data-theme="dark"] .lt-article .lt-codeblock > pre {
+    background: transparent;
+}

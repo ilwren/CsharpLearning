@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.45"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B0B0B0"/></marker></defs><text x="540" y="36" font-size="19" fill="#ECECEC" text-anchor="middle" font-weight="bold">集合家族，都能被 foreach 遍历</text>
+<text x="540" y="72" font-size="14" fill="#ECECEC" text-anchor="middle">所有集合共同的最低要求，能按顺序取出每一个元素</text>
+<rect x="370" y="84" width="340" height="56" rx="12" fill="#3D2A12" stroke="#FFB74D" stroke-width="2" filter="url(#md1)"/><text x="540.0" y="117.66666666666667" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">IEnumerable&lt;T&gt;</text>
+<line x1="540" y1="140" x2="190" y2="196" stroke="#9E9E9E" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="60" y="196" width="260" height="56" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="190.0" y="229.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">有序列表</text>
+<text x="190" y="280" font-size="15" fill="#ECECEC" text-anchor="middle">Array、List&lt;T&gt;</text>
+<text x="74" y="312" font-size="15" fill="#ECECEC" text-anchor="start">· 按下标访问（0 开始）</text>
+<text x="74" y="338" font-size="15" fill="#ECECEC" text-anchor="start">· 元素可以重复</text>
+<text x="74" y="364" font-size="15" fill="#ECECEC" text-anchor="start">· 顺序就是放入的顺序</text>
+<line x1="540" y1="140" x2="520" y2="196" stroke="#9E9E9E" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="390" y="196" width="260" height="56" rx="12" fill="#1D3A21" stroke="#A5D6A7" stroke-width="2" filter="url(#md1)"/><text x="520.0" y="229.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">键值对</text>
+<text x="520" y="280" font-size="15" fill="#ECECEC" text-anchor="middle">Dictionary&lt;TKey, TValue&gt;</text>
+<text x="404" y="312" font-size="15" fill="#ECECEC" text-anchor="start">· 按键找值</text>
+<text x="404" y="338" font-size="15" fill="#ECECEC" text-anchor="start">· 键不能重复，值可以</text>
+<text x="404" y="364" font-size="15" fill="#ECECEC" text-anchor="start">· 遍历顺序不保证</text>
+<line x1="540" y1="140" x2="850" y2="196" stroke="#9E9E9E" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="720" y="196" width="260" height="56" rx="12" fill="#3A1F2C" stroke="#F48FB1" stroke-width="2" filter="url(#md1)"/><text x="850.0" y="229.66666666666666" font-size="17" fill="#ECECEC" text-anchor="middle" font-weight="bold">不重复的集合</text>
+<text x="850" y="280" font-size="15" fill="#ECECEC" text-anchor="middle">HashSet&lt;T&gt;</text>
+<text x="734" y="312" font-size="15" fill="#ECECEC" text-anchor="start">· 只关心有没有</text>
+<text x="734" y="338" font-size="15" fill="#ECECEC" text-anchor="start">· 元素不能重复</text>
+<text x="734" y="364" font-size="15" fill="#ECECEC" text-anchor="start">· 顺序不保证</text>
+<rect x="60" y="430" width="980" height="50" rx="12" fill="#262626" stroke="#9E9E9E" stroke-width="1" filter="url(#md1)"/><text x="550.0" y="460.0" font-size="15" fill="#ECECEC" text-anchor="middle">元组不是集合，它只是临时把几个值捆在一起，见 4.6 节</text></svg>

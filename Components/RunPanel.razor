@@ -1,0 +1,240 @@
+@implements IAsyncDisposable
+@inject CodeRunner Runner
+@inject IJSRuntime JS
+
+<MudPaper Class="pa-4 lt-panel" Elevation="1">
+    <div class="d-flex align-center gap-2 mb-3 flex-wrap">
+        <MudText Typo="Typo.h6">@Title</MudText>
+        <MudSpacer />
+        <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.Restore" OnClick="ResetAsync">重置</MudButton>
+        @if (_session is not null)
+        {
+            <MudButton Variant="Variant.Outlined" Color="Color.Error" StartIcon="@Icons.Material.Filled.Stop" OnClick="StopAsync">停止</MudButton>
+        }
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.PlayArrow"
+                   Disabled="_busy" OnClick="RunAsync">
+            @(_session is not null ? "运行中…" : _busy ? "编译中…" : "运行")
+        </MudButton>
+    </div>
+
+    <CodeEditor @ref="_editor" Value="@InitialCode" Height="@Height" />
+
+    @if (_build is not null)
+    {
+        <div class="mt-3">
+            @if (!_build.Built)
+            {
+                <MudAlert Severity="Severity.Error" Dense="true">编译失败，请根据下面的错误信息修改。</MudAlert>
+            }
+            @if (_build.Error is not null)
+            {
+                <MudAlert Severity="Severity.Warning" Dense="true">@_build.Error</MudAlert>
+            }
+            @foreach (var d in _build.Diagnostics.Where(d => d.Severity == "error" || d.Severity == "warning"))
+            {
+                <div class="lt-diag @(d.Severity)">
+                    <span class="lt-diag-where">@(d.Line > 0 ? $"第 {d.Line} 行，第 {d.Column} 列" : "项目级")</span>
+                    <code>@d.Code</code> @d.Message
+                </div>
+            }
+        </div>
+    }
+
+    @if (_awaitingInput)
+    {
+        <form class="lt-input-row mt-3" @onsubmit="SubmitInputAsync" @onsubmit:preventDefault="true">
+            <span class="lt-input-prompt">程序在等待输入</span>
+            <input class="lt-input-field" @ref="_inputEl" @bind="_input" @bind:event="oninput"
+                   placeholder="输入后按回车发送" autocomplete="off" spellcheck="false" />
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small">发送</MudButton>
+            <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="CloseInputAsync">结束输入</MudButton>
+        </form>
+    }
+
+    @if (_segments.Count > 0 || _session is not null)
+    {
+        <div class="lt-output-head">
+            <span class="lt-output-title">输出</span>
+            <span class="lt-output-status">@_status</span>
+        </div>
+        <pre class="lt-output">@foreach (var s in _segments) { <span class="lt-seg lt-seg-@(s.Kind.ToString().ToLowerInvariant())">@s.Text</span> }</pre>
+    }
+</MudPaper>
+
+@code {
+    [Parameter] public string Title { get; set; } = "在线编辑器";
+    [Parameter] public string InitialCode { get; set; } = "";
+    [Parameter] public string Height { get; set; } = "360px";
+
+    private sealed class Seg
+    {
+        public SegmentKind Kind { get; init; }
+        public string Text { get; set; } = "";
+    }
+
+    private CodeEditor? _editor;
+    private CodeRunner.StartOutcome? _build;
+    private RunSession? _session;
+    private readonly List<Seg> _segments = new();
+    private ElementReference _inputEl;
+    private bool _busy;                 // 正在编译或运行
+    private bool _awaitingInput;        // 程序正在等待输入
+    private bool _focusInput;
+    private string _input = "";
+    private string _status = "";
+
+    public Task SetCodeAsync(string code) => _editor?.SetValueAsync(code) ?? Task.CompletedTask;
+
+    private async Task RunAsync()
+    {
+        if (_editor is null || _busy) return;
+        _busy = true;
+        _build = null;
+        _segments.Clear();
+        _awaitingInput = false;
+        _input = "";
+        _status = "编译中…";
+        try
+        {
+            var code = await _editor.GetValueAsync();
+            var outcome = await Runner.StartAsync(code);
+            _build = outcome;
+            await _editor.SetMarkersAsync(outcome.Diagnostics);
+            if (outcome.Session is null)
+            {
+                _status = "编译失败";
+                _busy = false;
+                return;
+            }
+            _session = outcome.Session;
+            _status = "运行中";
+        }
+        catch (Exception ex)
+        {
+            _status = "出错";
+            _segments.Add(new Seg { Kind = SegmentKind.System, Text = $"\n[出错：{ex.Message}]\n" });
+            _busy = false;
+            return;
+        }
+        // 事件在后台读取；不阻塞按钮事件本身
+        _ = PumpAsync(_session!);
+    }
+
+    private async Task PumpAsync(RunSession session)
+    {
+        try
+        {
+            await foreach (var ev in session.Events.ReadAllAsync())
+            {
+                await InvokeAsync(() =>
+                {
+                    Apply(ev);
+                    StateHasChanged();
+                });
+            }
+        }
+        catch (Exception) { }
+        finally
+        {
+            try
+            {
+                await session.DisposeAsync();
+                await InvokeAsync(() =>
+                {
+                    if (ReferenceEquals(_session, session))
+                    {
+                        _session = null;
+                        _awaitingInput = false;
+                        _busy = false;
+                        StateHasChanged();
+                    }
+                });
+            }
+            catch (Exception) { }
+        }
+    }
+
+    private void Apply(RunEvent ev)
+    {
+        switch (ev)
+        {
+            case OutputEvent o:
+                if (_segments.Count > 0 && _segments[^1].Kind == o.Kind)
+                {
+                    _segments[^1].Text += o.Text;
+                }
+                else
+                {
+                    _segments.Add(new Seg { Kind = o.Kind, Text = o.Text });
+                }
+                break;
+            case InputRequestedEvent:
+                _awaitingInput = true;
+                _focusInput = true;
+                _status = "等待输入";
+                break;
+            case ExitedEvent e:
+                _awaitingInput = false;
+                _status = e.TimedOut ? "已强制停止" : $"已结束（退出码 {e.ExitCode}）";
+                var text = e.TimedOut
+                    ? "\n[运行时间超过上限，已强制停止（是否有死循环？）]\n"
+                    : $"\n[程序结束，退出码 {e.ExitCode}]\n";
+                _segments.Add(new Seg { Kind = SegmentKind.System, Text = text });
+                break;
+        }
+    }
+
+    private async Task SubmitInputAsync()
+    {
+        if (_session is null || !_awaitingInput) return;
+        var text = _input;
+        _input = "";
+        _awaitingInput = false;
+        _status = "运行中";
+        await _session.SendLineAsync(text);
+    }
+
+    private async Task CloseInputAsync()
+    {
+        if (_session is null || !_awaitingInput) return;
+        _awaitingInput = false;
+        _status = "运行中";
+        _segments.Add(new Seg { Kind = SegmentKind.System, Text = "[已结束输入]\n" });
+        await _session.CloseInputAsync();
+    }
+
+    private Task StopAsync()
+    {
+        _session?.Kill();
+        return Task.CompletedTask;
+    }
+
+    private async Task ResetAsync()
+    {
+        _session?.Kill();
+        _build = null;
+        _segments.Clear();
+        _status = "";
+        if (_editor is not null)
+        {
+            await _editor.SetValueAsync(InitialCode);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_focusInput && _awaitingInput)
+        {
+            _focusInput = false;
+            try { await JS.InvokeVoidAsync("lt.focusEl", _inputEl); }
+            catch (JSException) { }
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // 离开页面时结束正在运行的程序
+        _session?.Kill();
+        await Task.CompletedTask;
+    }
+}

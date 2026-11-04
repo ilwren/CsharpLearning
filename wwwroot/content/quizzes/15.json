@@ -1,0 +1,39 @@
+{
+  "chapter": "15",
+  "questions": [
+    {
+      "id": "15-1",
+      "type": "single",
+      "prompt": "`a ??= b;` 的作用是？",
+      "options": [
+        "如果 a 为 null 才把 b 赋给 a",
+        "总是把 b 赋给 a",
+        "比较 a 和 b 是否相等",
+        "删除变量 a"
+      ],
+      "answer": 0,
+      "explain": "??= 是“为 null 时才赋值”的简写。"
+    },
+    {
+      "id": "15-2",
+      "type": "single",
+      "prompt": "C# 12 的主构造函数（primary constructor）写在哪里？",
+      "options": [
+        "类名后面的括号里声明参数",
+        "只能写在 record 上",
+        "写在 static 构造函数里",
+        "必须用 new 关键字单独调用"
+      ],
+      "answer": 0,
+      "explain": "例如 `class Logger(string name) { ... }`，参数在整个类体中都可以使用。"
+    },
+    {
+      "id": "15-3",
+      "type": "code",
+      "prompt": "用 C# 12 的集合表达式创建数组 `[1, 2, 3, 4]`，再用范围表达式 `nums[1..]` 取出第二个元素开始的部分，输出它们的和。",
+      "starter": "// 在这里创建数组、取范围并求和\n",
+      "expected": "9",
+      "explain": "nums[1..] 表示从索引 1 到末尾，即 2、3、4，它们的和是 9。"
+    }
+  ]
+}

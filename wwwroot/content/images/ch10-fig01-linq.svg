@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.16"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#616161"/></marker></defs><text x="540" y="36" font-size="19" fill="#212121" text-anchor="middle" font-weight="bold">LINQ 查询链，数据一条一条流过每个步骤</text>
+<rect x="40" y="110" width="150" height="80" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#md1)"/><text x="115.0" y="155.33333333333334" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">logs（8 条）</text>
+<line x1="190" y1="150.0" x2="225" y2="150.0" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="225" y="110" width="150" height="80" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="300.0" y="155.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold"></text>
+<text x="300.0" y="144" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">Where</text>
+<text x="300.0" y="168" font-size="14" fill="#212121" text-anchor="middle">级别是 error</text>
+<line x1="375" y1="150.0" x2="410" y2="150.0" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="410" y="110" width="150" height="80" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="485.0" y="155.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold"></text>
+<text x="485.0" y="144" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">Select</text>
+<text x="485.0" y="168" font-size="14" fill="#212121" text-anchor="middle">转换成文字</text>
+<line x1="560" y1="150.0" x2="595" y2="150.0" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="595" y="110" width="150" height="80" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="670.0" y="155.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold"></text>
+<text x="670.0" y="144" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">OrderBy</text>
+<text x="670.0" y="168" font-size="14" fill="#212121" text-anchor="middle">排序</text>
+<line x1="745" y1="150.0" x2="780" y2="150.0" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="780" y="110" width="150" height="80" rx="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" filter="url(#md1)"/><text x="855.0" y="155.66666666666666" font-size="17" fill="#212121" text-anchor="middle" font-weight="bold"></text>
+<text x="855.0" y="144" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">Take(3)</text>
+<text x="855.0" y="168" font-size="14" fill="#212121" text-anchor="middle">取前 3 条</text>
+<line x1="930" y1="150.0" x2="965" y2="150.0" stroke="#616161" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="965" y="110" width="120" height="80" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#md1)"/><text x="1025.0" y="155.33333333333334" font-size="16" fill="#212121" text-anchor="middle" font-weight="bold">ToList()</text>
+<line x1="40" y1="212" x2="930" y2="212" stroke="#E65100" stroke-width="2"/>
+<text x="485.0" y="236" font-size="15" fill="#E65100" text-anchor="middle">写下这些方法时不执行，遍历或 ToList() 时才执行</text>
+<text x="540" y="300" font-size="16" fill="#212121" text-anchor="middle">每条数据依次经过 Where、Select、OrderBy，最后取出前 3 条。</text>
+<text x="540" y="330" font-size="16" fill="#212121" text-anchor="middle">ToList() 会立即执行整条查询，并把结果保存进新的列表。</text></svg>

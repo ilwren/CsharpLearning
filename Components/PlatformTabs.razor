@@ -1,0 +1,92 @@
+@implements IDisposable
+@inject PlatformState State
+@inject IJSRuntime JS
+
+<div class="lt-tabs">
+    <div class="lt-tabs-bar" role="tablist">
+        <span class="lt-tabs-label">平台</span>
+        @foreach (var tab in Pages)
+        {
+            var isActive = tab.Platform == _active;
+            <button type="button" class="lt-tab @(isActive ? "active" : "")" role="tab"
+                    aria-selected="@(isActive ? "true" : "false")"
+                    @onclick="() => SelectAsync(tab.Platform)">@tab.Platform</button>
+        }
+    </div>
+    @foreach (var tab in Pages)
+    {
+        <div class="lt-tabs-page" role="tabpanel" hidden="@(tab.Platform != _active)">
+            @((MarkupString)tab.Html)
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>原文标记切分得到的各平台内容（见 ArticleSplitter）。</summary>
+    [Parameter, EditorRequired] public IReadOnlyList<TabPage> Pages { get; set; } = [];
+
+    private string _active = "";
+
+    protected override void OnInitialized()
+    {
+        State.Changed += OnStateChanged;
+    }
+
+    protected override void OnParametersSet()
+    {
+        _active = Resolve();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        try
+        {
+            // 第一次显示时决定初始平台：优先用浏览器里记住的选择，否则根据本机系统判断
+            var platform = await JS.InvokeAsync<string>("lt.getPlatform");
+            State.Init(platform);
+            var next = Resolve();
+            if (next != _active)
+            {
+                _active = next;
+                StateHasChanged();
+            }
+        }
+        catch (JSDisconnectedException) { }
+    }
+
+    // 选中的平台在本组里没有写法时：macOS 与 Linux 都是类 Unix 系统，互相借用；其余取第一个
+    private string Resolve()
+    {
+        var current = State.Current;
+        bool Has(string name) => Pages.Any(p => p.Platform == name);
+        if (current is not null)
+        {
+            if (Has(current)) return current;
+            if (current == "macOS" && Has("Linux")) return "Linux";
+            if (current == "Linux" && Has("macOS")) return "macOS";
+        }
+        return Pages.Count > 0 ? Pages[0].Platform : "";
+    }
+
+    private void OnStateChanged()
+    {
+        _active = Resolve();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private async Task SelectAsync(string platform)
+    {
+        State.Set(platform);
+        try
+        {
+            await JS.InvokeVoidAsync("lt.setPlatform", platform);
+        }
+        catch (JSDisconnectedException) { }
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= OnStateChanged;
+    }
+}

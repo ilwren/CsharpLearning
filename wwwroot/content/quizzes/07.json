@@ -1,0 +1,40 @@
+{
+  "chapter": "07",
+  "questions": [
+    {
+      "id": "07-1",
+      "type": "single",
+      "prompt": "关于 `virtual` 与 `override`，正确的是？",
+      "options": [
+        "子类用 override 重写父类的 virtual 方法，调用时执行子类的版本",
+        "父类的 virtual 方法不能被调用",
+        "override 必须用在 static 方法上",
+        "两者作用完全相同"
+      ],
+      "answer": 0,
+      "explain": "这就是多态。同一个调用，由对象的实际类型决定执行哪个版本。"
+    },
+    {
+      "id": "07-2",
+      "type": "single",
+      "prompt": "接口（interface）的主要作用是？",
+      "options": [
+        "让类可以包含字段的初始值",
+        "只约定“能做什么”，不规定具体实现",
+        "替代 namespace",
+        "保存数据"
+      ],
+      "answer": 1,
+      "explain": "接口是一份约定，实现它的类各自决定怎么做。"
+    },
+    {
+      "id": "07-3",
+      "type": "code",
+      "prompt": "定义接口 `IShape`，其中有方法 `double Area()`。类 `Circle` 实现它，面积取 3 * r * r（用 3 近似 π）。创建 `new Circle(2)` 放在 IShape 变量里，输出 `Area=12`。",
+      "starter": "// 在这里定义接口与类，然后调用\n",
+      "expected": "Area=12",
+      "hint": "接口与类可以写在顶层语句的后面。",
+      "explain": "通过 IShape 变量调用 Area()，执行的是 Circle 的实现。"
+    }
+  ]
+}

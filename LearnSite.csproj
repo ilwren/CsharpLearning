@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>LearnSite</RootNamespace>
+    <AssemblyName>LearnSite</AssemblyName>
+    <!-- 站点不做本地化，关闭 ICU 可减小体积并加快启动 -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+    <!-- 不生成 .br/.gz 副本：托管方（Cloudflare）会动态压缩；运行器文件很多，副本会成倍增加体积 -->
+    <CompressionEnabled>false</CompressionEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- runner/ 与 build/ 是独立工程与构建产物（见 scripts/build-runner.sh），不属于站点 -->
+    <Compile Remove="runner/**;build/**" />
+    <Content Remove="runner/**;build/**" />
+    <None Remove="runner/**;build/**" />
+    <EmbeddedResource Remove="runner/**;build/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.14" />
+    <PackageReference Include="Markdig" Version="1.5.1" />
+    <PackageReference Include="MudBlazor" Version="9.12.0" />
+  </ItemGroup>
+
+</Project>

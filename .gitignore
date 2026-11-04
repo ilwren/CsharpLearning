@@ -1,0 +1,17 @@
+# .NET 构建产物
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# 发布与运行器产物（由 scripts/build-site.sh 生成，不提交）
+build/
+wwwroot/runner/
+wwwroot/refs/
+
+# 编辑器与系统文件
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

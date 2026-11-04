@@ -1,0 +1,40 @@
+{
+  "chapter": "11",
+  "questions": [
+    {
+      "id": "11-1",
+      "type": "single",
+      "prompt": "`throw;` 与 `throw ex;` 的区别是？",
+      "options": [
+        "两者完全一样",
+        "throw; 保留原始堆栈，throw ex; 会重新开始记录堆栈",
+        "throw ex; 更安全",
+        "throw; 不能用在 catch 里"
+      ],
+      "answer": 1,
+      "explain": "重新抛出时用 throw; 可以保留错误发生的原始位置，便于排查。"
+    },
+    {
+      "id": "11-2",
+      "type": "single",
+      "prompt": "对于“用户输入的文件名写错了”这类预期内的失败，本书推荐的做法是？",
+      "options": [
+        "抛出异常，让程序崩溃",
+        "用 Result<T> 把失败作为返回值，由调用方显式处理",
+        "忽略错误直接继续",
+        "返回 -1 作为失败标记"
+      ],
+      "answer": 1,
+      "explain": "预期内的失败用返回值表达，异常留给真正的意外情况。"
+    },
+    {
+      "id": "11-3",
+      "type": "code",
+      "prompt": "写方法 `int ParsePositive(string s)`，能解析为正整数就返回它，否则抛出 `ArgumentException(\"必须是正整数\")`。先输出 ParsePositive(\"42\")，再用 try/catch 捕获 ParsePositive(\"-1\") 的异常，输出“捕获到错误，”加上异常消息，即 `捕获到错误，必须是正整数`。",
+      "starter": "// 在这里写方法并调用\n",
+      "expected": "42\n捕获到错误，必须是正整数",
+      "hint": "int.TryParse 解析失败时返回 false。",
+      "explain": "用 catch 捕获具体的异常类型，而不是笼统的 Exception。"
+    }
+  ]
+}

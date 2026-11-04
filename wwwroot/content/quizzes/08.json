@@ -1,0 +1,39 @@
+{
+  "chapter": "08",
+  "questions": [
+    {
+      "id": "08-1",
+      "type": "single",
+      "prompt": "`List<T>` 中的 T 是什么？",
+      "options": [
+        "类型参数，使用时由你指定具体类型",
+        "一个变量名",
+        "一个固定的 int 值",
+        "一种委托"
+      ],
+      "answer": 0,
+      "explain": "List<int>、List<string> 都是由同一个泛型类型生成的。"
+    },
+    {
+      "id": "08-2",
+      "type": "single",
+      "prompt": "给泛型方法加上 `where T : IComparable<T>` 约束，主要是为了？",
+      "options": [
+        "让方法运行得更快",
+        "限制 T 必须实现某个接口，从而可以调用它的成员",
+        "让 T 变成 object",
+        "禁止装箱"
+      ],
+      "answer": 1,
+      "explain": "约束让编译器知道 T 一定有 CompareTo 方法，否则编译不通过。"
+    },
+    {
+      "id": "08-3",
+      "type": "code",
+      "prompt": "写泛型方法 `T Max<T>(T a, T b)`（约束为 IComparable<T>），返回较大的那个。输出 Max(3, 9)，再输出 Max(\"apple\", \"banana\")，每行一个。",
+      "starter": "// 在这里写泛型方法\n",
+      "expected": "9\nbanana",
+      "explain": "同一个方法可以用于不同的类型，编译器会为每个类型生成对应的代码。"
+    }
+  ]
+}

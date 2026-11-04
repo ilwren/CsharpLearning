@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="470" viewBox="0 0 1100 470" font-family="Roboto, Noto Sans CJK SC, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif"><defs><filter id="md1" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.45"/></filter></defs><defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B0B0B0"/></marker></defs><text x="540" y="36" font-size="19" fill="#ECECEC" text-anchor="middle" font-weight="bold">数组，一排固定长度、按序号排列的格子</text>
+<rect x="200" y="150" width="150" height="80" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="275.0" y="198.0" font-size="24" fill="#ECECEC" text-anchor="middle" font-weight="bold">90</text>
+<text x="275.0" y="268" font-size="17" fill="#90CAF9" text-anchor="middle" font-weight="bold">[0]</text>
+<rect x="350" y="150" width="150" height="80" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="425.0" y="198.0" font-size="24" fill="#ECECEC" text-anchor="middle" font-weight="bold">85</text>
+<text x="425.0" y="268" font-size="17" fill="#90CAF9" text-anchor="middle" font-weight="bold">[1]</text>
+<rect x="500" y="150" width="150" height="80" rx="12" fill="#17324D" stroke="#90CAF9" stroke-width="2" filter="url(#md1)"/><text x="575.0" y="198.0" font-size="24" fill="#ECECEC" text-anchor="middle" font-weight="bold">77</text>
+<text x="575.0" y="268" font-size="17" fill="#90CAF9" text-anchor="middle" font-weight="bold">[2]</text>
+<text x="425.0" y="124" font-size="17" fill="#FFB74D" text-anchor="middle" font-weight="bold">Length = 3</text>
+<line x1="200" y1="138" x2="650" y2="138" stroke="#FFB74D" stroke-width="2"/>
+<line x1="425.0" y1="308" x2="425.0" y2="286" stroke="#FFB74D" stroke-width="2" marker-end="url(#arr)"/>
+<text x="425.0" y="334" font-size="15" fill="#ECECEC" text-anchor="middle">scores[1] 直接跳到第 2 个格子，不用逐个数</text>
+<text x="540" y="400" font-size="16" fill="#ECECEC" text-anchor="middle">格子一经创建就固定，不能加长或缩短。</text>
+<text x="540" y="430" font-size="16" fill="#ECECEC" text-anchor="middle">“删除”只能新建一个更小的数组，或用 Array.Resize 复制一份。</text></svg>

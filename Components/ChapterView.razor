@@ -1,0 +1,147 @@
+@inject ContentStore Content
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+@if (_info is null)
+{
+    <MudAlert Severity="Severity.Error">找不到这一章：@Key</MudAlert>
+}
+else
+{
+    <div class="lt-chapter-head">
+        <MudText Typo="Typo.overline" Color="Color.Primary">@_info.Part</MudText>
+        @if (_stats is not null)
+        {
+            <div class="lt-meta">
+                <MudChip T="string" Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary"
+                         Icon="@Icons.Material.Filled.Schedule">
+                    推荐学习时长约 @_studyMinutes 分钟（阅读、动手与自测）
+                </MudChip>
+                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary"
+                         Icon="@Icons.Material.Filled.MenuBook">
+                    推荐阅读约 @_stats.Minutes 分钟（不含练习）
+                </MudChip>
+                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined"
+                         Icon="@Icons.Material.Filled.Notes">
+                    本章约 @FormatChars(_stats.Chars)（不含代码）
+                </MudChip>
+            </div>
+        }
+    </div>
+
+    <article @key="@($"article:{Key}")" id="lt-article" class="lt-article">
+        @foreach (var part in _parts)
+        {
+            if (part is TabsPart tabs)
+            {
+                <PlatformTabs Pages="tabs.Pages" />
+            }
+            else if (part is HtmlPart html)
+            {
+                @((MarkupString)html.Html)
+            }
+        }
+    </article>
+
+    <MudDivider Class="my-8" />
+
+    <div id="playground" class="lt-anchor"></div>
+    <RunPanel @ref="_run" Title="@($"动手试一试 · {_info.Title}")" InitialCode="@StarterCode" />
+
+    <QuizPanel @key="Key" Key="@Key" />
+
+    @if (_links.Count > 0)
+    {
+        <MudPaper Class="pa-4 mt-8 lt-panel lt-links" Elevation="1">
+            <MudText Typo="Typo.h6" Class="mb-2">延伸阅读</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-3">以下为官方文档，内容以页面为准。</MudText>
+            <ul class="lt-link-list">
+                @foreach (var link in _links)
+                {
+                    <li>
+                        <MudLink Href="@link.Url" Target="_blank" Underline="Underline.None" Class="lt-ext-link">
+                            <MudIcon Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" Class="mr-1" />@link.Title
+                        </MudLink>
+                        <span class="lt-link-url">@link.Url</span>
+                    </li>
+                }
+            </ul>
+        </MudPaper>
+    }
+
+    <div class="d-flex justify-space-between align-center mt-10 flex-wrap gap-2">
+        @if (_prev is not null)
+        {
+            <MudButton Href="@_prev.Url" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.ArrowBack">@_prev.Title</MudButton>
+        }
+        else
+        {
+            <span></span>
+        }
+        @if (_next is not null)
+        {
+            <MudButton Href="@_next.Url" Variant="Variant.Outlined" EndIcon="@Icons.Material.Filled.ArrowForward">@_next.Title</MudButton>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public string Key { get; set; } = "";
+
+    private const string StarterCode = """
+        // 这里是一个可以直接运行的 C# 程序。
+        // 点击代码块旁的“在编辑器中打开”，可以把文中的示例拿到这里运行。
+        Console.WriteLine("Hello, LogLens!");
+        """;
+
+    private ChapterInfo? _info;
+    private ChapterInfo? _prev;
+    private ChapterInfo? _next;
+    private ReadingStats? _stats;
+    private int _studyMinutes;
+    private IReadOnlyList<LinkItem> _links = [];
+    private IReadOnlyList<ArticlePart> _parts = [];
+    private string? _renderedKey;
+    private RunPanel? _run;
+    private DotNetObjectReference<ChapterBridge>? _bridge;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_renderedKey == Key) return;
+        _renderedKey = Key;
+        // 正文按需从 content/chapters 加载并渲染（首次打开该章时）
+        await Content.EnsureChapterAsync(Key);
+        _info = Content.Find(Key);
+        _parts = Content.GetParts(Key);
+        _stats = Content.GetStats(Key);
+        _studyMinutes = Content.GetStudyMinutes(Key) ?? 0;
+        _links = Content.GetLinks(Key);
+        (_prev, _next) = Content.Neighbors(Key);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // 每次渲染后：代码块高亮与工具条、平台分页、自测勾选框、锚点跳转
+        if (_info is not null)
+        {
+            _bridge ??= DotNetObjectReference.Create(new ChapterBridge(OpenBlockAsync));
+            await JS.InvokeVoidAsync("lt.decorate", "lt-article", _bridge, Key);
+        }
+    }
+
+    private async Task OpenBlockAsync(string code)
+    {
+        if (_run is null) return;
+        await _run.SetCodeAsync(code);
+        await JS.InvokeVoidAsync("lt.scrollIntoView", "playground");
+    }
+
+    private static string FormatChars(int chars) =>
+        chars >= 10000 ? $"{chars / 10000.0:0.0} 万字" : $"{chars:N0} 字";
+
+    public async ValueTask DisposeAsync()
+    {
+        _bridge?.Dispose();
+        await ValueTask.CompletedTask;
+    }
+}

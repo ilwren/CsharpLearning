@@ -1,0 +1,39 @@
+{
+  "chapter": "04",
+  "questions": [
+    {
+      "id": "04-1",
+      "type": "single",
+      "prompt": "`List<T>` 与数组最主要的区别是？",
+      "options": [
+        "List 的元素个数可以增减，数组的长度固定",
+        "数组只能存放字符串",
+        "List 不能用 foreach 遍历",
+        "两者没有区别"
+      ],
+      "answer": 0,
+      "explain": "数组一旦创建，长度不能改变；List<T> 可以用 Add、Remove 增减元素。"
+    },
+    {
+      "id": "04-2",
+      "type": "single",
+      "prompt": "对 `Dictionary<string, int>` 使用 `dict[\"不存在的键\"]` 会怎样？",
+      "options": [
+        "返回 0",
+        "返回 null",
+        "抛出 KeyNotFoundException",
+        "自动添加这个键"
+      ],
+      "answer": 2,
+      "explain": "用索引器取值时键必须存在；想安全地取值，可以用 TryGetValue。"
+    },
+    {
+      "id": "04-3",
+      "type": "code",
+      "prompt": "用 List<int> 存入 3、1、2，排序后用 foreach 每行输出一个数。",
+      "starter": "// 在这里写代码\n",
+      "expected": "1\n2\n3",
+      "explain": "List<T>.Sort() 原地排序，会改变列表本身。"
+    }
+  ]
+}

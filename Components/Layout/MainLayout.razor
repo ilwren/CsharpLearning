@@ -1,0 +1,77 @@
+@inherits LayoutComponentBase
+@inject ContentStore Content
+@inject IJSRuntime JS
+
+<MudThemeProvider @bind-IsDarkMode="_dark" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Dense="false">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                       OnClick="@(() => _drawerOpen = !_drawerOpen)" aria-label="切换目录" />
+        <MudText Typo="Typo.h6" Class="ml-2">
+            <a href="/" class="lt-brand">C# 自学教程</a>
+        </MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Code" Color="Color.Inherit" Href="/playground" title="在线编辑器" />
+        <MudIconButton Icon="@(_dark ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)"
+                       Color="Color.Inherit" OnClick="ToggleThemeAsync" title="切换深浅主题" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1" ClipMode="DrawerClipMode.Always">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.subtitle1">目录</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">首页</MudNavLink>
+            <MudNavLink Href="/playground" Icon="@Icons.Material.Filled.Code">在线编辑器</MudNavLink>
+            @foreach (var group in Content.Ordered.GroupBy(c => c.Part))
+            {
+                <MudNavGroup Title="@group.Key" Expanded="true">
+                    @foreach (var c in group)
+                    {
+                        <MudNavLink Href="@c.Url" Match="NavLinkMatch.Prefix">@c.Title</MudNavLink>
+                    }
+                </MudNavGroup>
+            }
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="lt-main py-6">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private bool _drawerOpen = true;
+    private bool _dark;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        // 恢复上次选择的主题（保存在浏览器 localStorage 中）
+        var stored = await JS.InvokeAsync<bool>("lt.getStoredTheme");
+        if (stored != _dark)
+        {
+            _dark = stored;
+            await JS.InvokeVoidAsync("lt.setTheme", _dark);
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleThemeAsync()
+    {
+        _dark = !_dark;
+        await JS.InvokeVoidAsync("lt.setTheme", _dark);
+    }
+}
