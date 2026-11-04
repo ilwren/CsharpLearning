@@ -33,7 +33,8 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: 构建站点（含浏览器运行器）
-        run: ./scripts/build-site.sh
+        # 用 bash 显式调用，不依赖脚本的执行位（从网页上传或解压得到的副本常会丢失它）
+        run: bash scripts/build-site.sh
 
       - name: 部署
         uses: cloudflare/wrangler-action@v3
